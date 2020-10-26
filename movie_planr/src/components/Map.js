@@ -1,12 +1,15 @@
 /*global google*/
-import React, { Component } from "react";
-import { withGoogleMap, GoogleMap, DirectionsRenderer, Marker } from "react-google-maps";
+import React, { Component } from 'react';
+import { withGoogleMap, GoogleMap, DirectionsRenderer, Marker } from 'react-google-maps';
 import data from '../data/movieData.json';
 
 class Map extends Component {
-    state = {
-        directions: null,
-        markers: data
+    constructor(props) {
+        super(props);
+        this.state = {
+            directions: null,
+            markers: data
+        }
     };
 
     componentDidMount() {
@@ -49,7 +52,7 @@ class Map extends Component {
                     lat: 37.773972,
                     lng: -122.431297
                 }}
-                defaultZoom={13}
+                defaultZoom={10}
             >
                 {this.state.markers.map((data) => {
                     return (<Marker
@@ -70,7 +73,7 @@ class Map extends Component {
         return (
             <div>
                 <MovieLocationsMap
-                    containerElement={<div style={{ height: `100vh`, width: "50vw" }} />}
+                    containerElement={<div style={{ height: `700px`, width: `700px`, margin: `0px` }} />}
                     mapElement={<div style={{ height: `100%` }} />}
                 />
             </div>
