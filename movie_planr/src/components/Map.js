@@ -1,60 +1,82 @@
 /*global google*/
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withGoogleMap, GoogleMap, DirectionsRenderer, Marker } from 'react-google-maps';
-import data from '../data/movieData.json';
+// import data from '../data/movieData.json';
+import { withScriptjs } from 'react-google-maps';
 
-class Map extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            directions: null,
-            markers: data
-        }
-    };
+const DEFAULTZOOM = 13;
+const ZOOMEDIN = 15;
+const DEFAULTCENTER = {
+    lat: 37.773972,
+    lng: -122.431297
+}
 
-    componentDidMount() {
-        const directionsService = new google.maps.DirectionsService();
+function Map(props) {
+    const [directions, setDirections] = useState(null);
+    const [zoom, setZoom] = useState(DEFAULTZOOM);
 
-        const origin = { lat: 37.7899845, lng: -122.3998704 };
-        const destination = { lat: 37.7644489, lng: -122.4381707 };
+    var mapRef = null;
 
-        directionsService.route(
-            {
-                origin: origin,
-                destination: destination,
-                travelMode: google.maps.TravelMode.DRIVING,
-                // waypoints: [
-                //     {
-                //         location: new google.maps.LatLng(6.4698, 3.5852)
-                //     },
-                //     {
-                //         location: new google.maps.LatLng(6.6018, 3.3515)
-                //     },
-                // ]
-            },
-            (result, status) => {
-                if (status === google.maps.DirectionsStatus.OK) {
-                    console.log(result)
-                    this.setState({
-                        directions: result
-                    });
-                } else {
-                    console.error(`error fetching directions ${result}`);
-                }
-            }
-        );
+    const setRef = (ref) => {
+        mapRef = ref;
+        console.log(mapRef);
     }
 
-    render() {
-        const MovieLocationsMap = withGoogleMap(props => (
+    useEffect(() => {
+        if (props.places.length === 1) {
+            const place = props.places[0];
+
+            mapRef.panTo({ 'lat': place.lat, 'lng': place.lng });
+            setZoom(ZOOMEDIN);
+        } else if (props.places.length >= 2) {
+            const directionsService = new google.maps.DirectionsService();
+
+            const startingPlace = props.places[0];
+            const endingPlace = props.places[props.places.length - 1];
+
+            const origin = { lat: startingPlace.lat, lng: startingPlace.lng };
+            const destination = { lat: endingPlace.lat, lng: endingPlace.lng };
+
+            const waypoints = props.places.slice(1, -1).map(p => {
+                return { 'location': new google.maps.LatLng(p.lat, p.lng) }
+            })
+
+            directionsService.route(
+                {
+                    origin: origin,
+                    destination: destination,
+                    travelMode: google.maps.TravelMode.DRIVING,
+                    waypoints
+                },
+                (result, status) => {
+                    if (status === google.maps.DirectionsStatus.OK) {
+                        console.log(result);
+                        setDirections(result);
+                    } else {
+                        console.error(`error fetching directions ${result}`);
+                    }
+                }
+            );
+        } else {
+            setDirections({ routes: [] });
+            mapRef.panTo(DEFAULTCENTER);
+            setZoom(DEFAULTZOOM);
+        }
+    }, [props.places]);
+
+    const directionsRenderer = <DirectionsRenderer directions={directions} />
+
+    return (
+        <div>
             <GoogleMap
-                defaultCenter={{
-                    lat: 37.773972,
-                    lng: -122.431297
-                }}
-                defaultZoom={10}
+                ref={setRef}
+
+                defaultCenter={DEFAULTCENTER}
+                defaultZoom={DEFAULTZOOM}
+
+                zoom={zoom}
             >
-                {this.state.markers.map((data) => {
+                {props.markers.map((data) => {
                     return (<Marker
                         key={data.id}
                         position={{ lat: data.lat, lng: data.lng }}
@@ -64,21 +86,12 @@ class Map extends Component {
                     </Marker>
                     )
                 })}
-                <DirectionsRenderer
-                    directions={this.state.directions}
-                />
-            </GoogleMap>
-        ));
 
-        return (
-            <div>
-                <MovieLocationsMap
-                    containerElement={<div style={{ height: `700px`, width: `700px`, margin: `0px` }} />}
-                    mapElement={<div style={{ height: `100%` }} />}
-                />
-            </div>
-        );
-    }
+                {directions && directionsRenderer}
+            </GoogleMap>
+        </div>
+    );
 }
 
-export default Map;
+
+export default withScriptjs(withGoogleMap(Map));

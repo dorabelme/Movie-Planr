@@ -7,6 +7,11 @@ const { Client } = require("@googlemaps/google-maps-services-js");
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 const client = new Client({});
 
+const hashCode = (str) => {
+    return str.split('').reduce((prevHash, currVal) =>
+        (((prevHash << 5) - prevHash) + currVal.charCodeAt(0)) | 0, 0);
+}
+
 const getLatLong = (place) => {
     return client
         .geocode({
@@ -14,7 +19,7 @@ const getLatLong = (place) => {
                 address: `${place}, San Francisco, California`,
                 key: apiKey
             },
-            timeout: 1000 // milliseconds
+            timeout: 5000 // milliseconds
         })
         .then(r => {
             const lat = r.data.results[0].geometry.location.lat;
@@ -44,12 +49,35 @@ const getMovies = async () => {
                 ...movie,
                 'lat': o.lat,
                 'lng': o.lng,
-                'id': uuid()
+                'id': hashCode(movie.locations)
             }
             return newMovie;
         }));
 
-        const strMovies = JSON.stringify(moviesWithLatLng);
+        const obj = {};
+
+        for (let elem of moviesWithLatLng) {
+            const id = elem.id;
+
+            if (id in obj) {
+                obj[id].push(elem);
+            } else {
+                obj[id] = [elem];
+            }
+        }
+
+        const locations = Object.entries(obj).map(([key, val]) => {
+            const firstVal = val[0];
+            const movies = val.map(_v => {
+                const { id, locations, lat, lng, ...movie } = _v;
+                return movie;
+            })
+
+            const obj = { id: firstVal.id, locations: firstVal.locations, lat: firstVal.lat, lng: firstVal.lng, 'movies': movies };
+            return obj;
+        })
+
+        const strMovies = JSON.stringify(locations);
         writeToFile("./src/data/movieData.json", strMovies);
     } catch (error) {
         console.error(error);

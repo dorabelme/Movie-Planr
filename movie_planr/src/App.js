@@ -1,24 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Map from './components/Map';
 import Navbar from './components/Navbar';
-import RouterComponent from './components/RouterComponent';
-import { withScriptjs } from 'react-google-maps';
+import Planner from './components/Planner';
 import './scss/app.scss';
+import data from './data/movieData.json';
 
-const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
-const googleMapURL = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
+function App() {
+  const [markers, setMarkers] = useState(data);
+  const [places, setPlaces] = useState([]); //same schema as movieData (minus movie details)
 
-function App(props) {
-  const MapLoader = withScriptjs(Map);
+  const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+  const googleMapURL = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
+
+  const addtoPlaces = (newPlace) => {
+    setPlaces([...places, newPlace]);
+  }
+
+  const removePlace = (id) => {
+    setPlaces(places.filter(place => place.id !== id));
+  };
 
   return (
     <div className='AppContainer'>
       <Navbar />
       <div className='MainContainer'>
-        <RouterComponent />
-        <MapLoader
+        <Planner
+          addtoPlaces={addtoPlaces}
+          removePlace={removePlace}
+          places={places} />
+        <Map
+          markers={markers}
+          places={places}
           googleMapURL={googleMapURL}
           loadingElement={<div style={{ height: `100%`, width: `100%` }} />}
+          containerElement={<div style={{ height: `700px`, width: `700px`, margin: `0px` }} />}
+          mapElement={<div style={{ height: `100%` }} />}
         />
       </div>
     </div>

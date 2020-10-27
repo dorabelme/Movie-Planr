@@ -1,43 +1,44 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { AutoComplete, Button } from 'antd';
 import data from '../data/movieData.json';
 import '../scss/searchForm.scss';
 
-class SearchForm extends Component {
-    constructor(props) {
-        super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+const initialState = { place: '', searchInput: '' }
 
-    handleSubmit(e) {
+const SearchForm = ({ places, addLocation }) => {
+    const [state, setState] = useState(initialState)
+
+    const handleSubmit = (e) => {
         const f = data.find(d => d.locations === e);
-        this.props.addLocation({ 'moviePlace': f.locations, id: f.id });
+        addLocation(f);
+        setState({ searchInput: '' })
     };
+    const locations = new Set(data.map(d => d.locations).filter(d => !places.map(d => d.locations).includes(d)));
+    const dataJSON = [...locations].map(d => {
+        return { 'value': d }
+    });
 
-    render() {
-        const locations = new Set(data.map(d => d.locations).filter(d => !this.props.places.includes(d)));
+    console.log(dataJSON);
 
-        const dataJSON = [...locations].map(d => {
-            return { 'value': d }
-        });
-
-        return (
-            <div>
-                <AutoComplete
-                    style={{
-                        width: 200,
-                    }}
-                    options={dataJSON}
-                    placeholder='Search for a place'
-                    filterOption={(inputValue, option) =>
-                        option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-                    }
-                    onSelect={this.handleSubmit}
-                />
-                <Button type='primary'>Search</Button>
-            </div>
-        )
-    }
+    return (
+        <div>
+            <AutoComplete
+                className='searchForm'
+                style={{
+                    width: 200,
+                }}
+                options={dataJSON}
+                placeholder='Search for a place'
+                filterOption={(inputValue, option) =>
+                    option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                }
+                onChange={e => setState({ searchInput: e })}
+                onSelect={handleSubmit}
+                value={state.searchInput}
+            />
+            <Button className='searchButton' type='primary'>Search</Button>
+        </div>
+    )
 }
 
 export default SearchForm;
