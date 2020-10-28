@@ -1,6 +1,6 @@
 /*global google*/
 import React, { useState, useEffect } from 'react';
-import { withGoogleMap, GoogleMap, DirectionsRenderer, Marker } from 'react-google-maps';
+import { withGoogleMap, GoogleMap, DirectionsRenderer, Marker, InfoWindow } from 'react-google-maps';
 // import data from '../data/movieData.json';
 import { withScriptjs } from 'react-google-maps';
 
@@ -19,13 +19,13 @@ function Map(props) {
 
     const setRef = (ref) => {
         mapRef = ref;
-        console.log(mapRef);
+        // console.log(mapRef);
     }
 
     useEffect(() => {
         if (props.places.length === 1) {
             const place = props.places[0];
-
+            setDirections({ routes: [] });
             mapRef.panTo({ 'lat': place.lat, 'lng': place.lng });
             setZoom(ZOOMEDIN);
         } else if (props.places.length >= 2) {
@@ -62,9 +62,7 @@ function Map(props) {
             mapRef.panTo(DEFAULTCENTER);
             setZoom(DEFAULTZOOM);
         }
-    }, [props.places]);
-
-    const directionsRenderer = <DirectionsRenderer directions={directions} />
+    }, [props.places, mapRef]);
 
     return (
         <div>
@@ -79,15 +77,26 @@ function Map(props) {
                 {props.markers.map((data) => {
                     return (<Marker
                         key={data.id}
-                        position={{ lat: data.lat, lng: data.lng }}
+                        position={
+                            { lat: data.lat, lng: data.lng }
+                        }
                         title={data.locations}
                         name={data.locations}
+                        onClick={() => props.toggleMarker(data.id)}
                     >
+                        {data.isOpen && <InfoWindow
+                            key={data.id + 1000}
+                            onCloseClick={() => props.toggleMarker(data.id)}
+                            options={{ maxWidth: 300 }} style={{ backgroundColor: 'red' }} >
+                            <div>
+                                <h1>{data.locations}</h1>
+                            </div>
+                        </InfoWindow>}
                     </Marker>
                     )
                 })}
 
-                {directions && directionsRenderer}
+                {directions && <DirectionsRenderer directions={directions} />}
             </GoogleMap>
         </div>
     );

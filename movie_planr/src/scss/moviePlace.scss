@@ -1,16 +1,23 @@
-.PlaceContainer {
+.Location-Wrapper {
   display: flex;
-  margin: 0 -3rem 4px;
-  padding: 1.1rem 3rem;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  background:#1890FF;
-  color: white;
+  align-items: baseline;
 }
 
-.Place {
-  position: relative;
-  transition: opacity 0.4s linear;
+.ant-timeline-item {
+  // padding: 0px;
+  margin: 0;
+}
+
+.ant-timeline-item h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.ant-timeline-item p {
+  font-size: 12px;
 }
 
 .Place-buttons {
@@ -25,5 +32,5 @@
   background: none;
   -webkit-appearance: none;
   cursor: pointer;
-  color: #fff;
+  color:#1890FF;
 }

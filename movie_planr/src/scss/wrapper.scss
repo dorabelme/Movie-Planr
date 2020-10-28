@@ -1,0 +1,39 @@
+.AppContainer {
+  background: #f7f9fa;
+  width: 115rem;
+  margin: 4rem auto;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  @media (max-width: $mq-tablet) {
+    margin: 2rem;
+    max-width: 80rem;
+    min-width: 70rem;
+    width: 90%;
+    margin: 2rem auto;
+  }
+  @media (max-width: $mq-mobile) {
+    max-width: 50rem;
+    min-width: 40rem;
+    width: 90%;
+    margin: 2 auto;
+  }
+}
+
+.MainContainer {
+  background-color: #f7f9fa;
+  display: flex;
+  flex-direction: row;
+  margin: 0px;
+  width: 100%;
+
+  @media (max-width: $mq-tablet) {
+    max-width: 80rem;
+    width: 90%;
+  }
+
+  @media (max-width: $mq-mobile) {
+    max-width: 50rem;
+    display: flex;
+    flex-direction: column;
+  }
+}

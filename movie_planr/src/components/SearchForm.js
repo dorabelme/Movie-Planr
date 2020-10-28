@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { AutoComplete, Button } from 'antd';
 import data from '../data/movieData.json';
-import '../scss/searchForm.scss';
 
 const initialState = { place: '', searchInput: '' }
 

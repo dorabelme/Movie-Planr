@@ -1,6 +1,6 @@
 const axios = require('axios');
 const fs = require('fs');
-const { uuid } = require('uuidv4');
+// const { uuid } = require('uuidv4');
 
 const { Client } = require("@googlemaps/google-maps-services-js");
 
@@ -41,7 +41,7 @@ const writeToFile = (path, data) => {
 const getMovies = async () => {
     try {
         const response = await axios.get('https://data.sfgov.org/resource/yitu-d5am.json');
-        const movies = response.data.slice(0, 10);
+        const movies = response.data.slice(0, 50);
 
         const moviesWithLatLng = await Promise.all(movies.filter(movie => movie.locations !== undefined).map(async (movie) => {
             const o = await getLatLong(movie.locations);
