@@ -1,35 +1,33 @@
-import React, { Component } from 'react';
-import '../scss/moviePlace.scss';
+import React from 'react';
+import { Timeline } from 'antd';
 
-class MoviePlace extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { moviePlace: this.props.moviePlace };
-        this.handleRemove = this.handleRemove.bind(this);
+const MoviePlace = ({ moviePlace, removePlace, id, movies }) => {
+
+    const handleRemove = () => {
+        removePlace(id);
     };
 
-    handleRemove() {
-        this.props.removeTodo(this.props.id);
-    };
 
-    render() {
-        const result = (
-            <li className='Place'>
-                {this.props.moviePlace}
-            </li>
-        );
+    return (
 
-        return (
-            <div className='PlaceContainer'>
-                {result}
-                <div className='Place-buttons'>
-                    <button onClick={this.handleRemove}>
-                        <i class='fas fa-trash' />
-                    </button>
-                </div>
+        <Timeline className='Location-Wrapper' >
+            <Timeline.Item>
+                <div>
+                    <h3>{moviePlace}</h3>
+                    {movies.map(movie => <p>{`Movie filmed: ${movie.title} (${movie.release_year})`}</p>)}
+
+                </div></Timeline.Item>
+
+            {/* <li className='Place'>
+                {moviePlace}
+            </li> */}
+            <div className='Place-buttons'>
+                <button onClick={handleRemove}>
+                    <i className='fas fa-trash' />
+                </button>
             </div>
-        );
-    }
+        </Timeline>
+    );
 };
 
 export default MoviePlace;

@@ -1,0 +1,26 @@
+// Media Queries
+
+// < 576 (mobile)
+// 576 - 900 (tablet)
+// > 900 (
+@mixin mediaSm {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+
+@mixin mediaMd {
+  @media (min-width: 577px) {
+    @content;
+  }
+}
+
+@mixin mediaLg {
+  @media (max-width: 800px) {
+    @content;
+  }
+}
+// Media queries
+$mq-mobile: 500px;
+$mq-tablet: 800px;
+$mq-desktop: 1000px;
