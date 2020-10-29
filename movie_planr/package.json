@@ -12,10 +12,12 @@
     "axios": "^0.21.0",
     "cypress": "^5.5.0",
     "google-maps-react": "^2.0.6",
+    "magic-sdk": "^3.0.1",
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-google-maps": "^9.4.5",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "uuidv4": "^6.2.4",
     "web-vitals": "^0.2.4"

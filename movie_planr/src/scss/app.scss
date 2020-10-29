@@ -5,13 +5,14 @@
 @import '_vars';
 
 // Components
-@import "reset";
-@import "wrapper";
-@import "navbar";
-@import "map";
-@import "planner";
-@import "moviePlace";
-@import "searchForm";
+@import 'reset';
+@import 'login';
+@import 'wrapper';
+@import 'navbar';
+@import 'map';
+@import 'planner';
+@import 'moviePlace';
+@import 'searchForm';
 
 html {
   font-size: 62.5%;

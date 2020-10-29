@@ -17,8 +17,6 @@ const SearchForm = ({ places, addLocation }) => {
         return { 'value': d }
     });
 
-    console.log(dataJSON);
-
     return (
         <div>
             <AutoComplete

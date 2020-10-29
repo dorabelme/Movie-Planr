@@ -12,7 +12,7 @@ const Planner = ({ places, addtoPlaces, removePlace, setPlannerRef }) => {
     />);
 
     return (
-        < div className="PlaceList" ref={setPlannerRef} >
+        < div className='PlaceList' ref={setPlannerRef} >
             < SearchForm addLocation={addtoPlaces} places={places} />
             <ul>{moviePlaces}</ul>
         </div>

@@ -78,7 +78,7 @@ const getMovies = async () => {
         })
 
         const strMovies = JSON.stringify(locations);
-        writeToFile("./src/data/movieData.json", strMovies);
+        writeToFile('./src/data/movieData.json', strMovies);
     } catch (error) {
         console.error(error);
     }
