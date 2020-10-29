@@ -6,11 +6,10 @@ import data from '../data/movieData.json';
 import '../scss/app.scss';
 
 const AppContainer = (props) => {
-  console.log("123");
-  console.log(props);
-
   const [markers, setMarkers] = useState([]);
-  const [places, setPlaces] = useState([]); //same schema as movieData (minus movie details)
+  const [places, setPlaces] = useState([]);
+  const [mapHeight, setMapHeight] = useState(750);
+  const [mapWidth, setMapWidth] = useState(750);
 
   const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
   const googleMapURL = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
@@ -37,16 +36,14 @@ const AppContainer = (props) => {
     setPlaces(newState);
   }
 
-  useEffect(() => {
-    localStorage.setItem('placesData', JSON.stringify(places))
-  }, [places])
-
   const removePlace = (id) => {
     setPlaces(places.filter(place => place.id !== id));
   };
 
-  const [mapHeight, setMapHeight] = useState(750);
-  const [mapWidth, setMapWidth] = useState(750);
+  useEffect(() => {
+    localStorage.setItem('placesData', JSON.stringify(places))
+  }, [places])
+
 
   // const plannerWidth = 400;
   useEffect(() => {
@@ -87,8 +84,7 @@ const AppContainer = (props) => {
   // useEffect(() => {
   //    const fn1 = () => {
   //         mql1.addEventListener("change", () => {
-  //       // console.log(window, containerRef, plannerRef);
-
+  
   //       if (containerRef != null && plannerRef != null) {
   //         const offset = retNum(window.getComputedStyle(plannerRef).getPropertyValue("width"));
 
@@ -105,8 +101,6 @@ const AppContainer = (props) => {
   // }, [containerRef])
 
   // useEffect(() => {
-  //   // console.log(containerRef, plannerRef);
-
   //   if (containerRef != null && plannerRef != null) {
   //     const offset = retNum(window.getComputedStyle(plannerRef).getPropertyValue("width"));
 

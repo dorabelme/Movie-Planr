@@ -9,9 +9,7 @@ const { Header } = Layout;
 
 
 const Navbar = ({ history, setIsLoggedIn }) => {
-    console.log(history, setIsLoggedIn);
 
-        /* Implement Logout Handler */
     const handleLogout = async () => {
         console.log("logout");
 
@@ -19,10 +17,8 @@ const Navbar = ({ history, setIsLoggedIn }) => {
         console.log(result);
         setIsLoggedIn(false);
         history.push('/');
-        
-        // <Redirect to='/'/>
-        // render();
     };
+    
     return (
         <Layout>
             <Header className='Navbar'>

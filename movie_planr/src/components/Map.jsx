@@ -46,12 +46,10 @@ function Map(props) {
             setZoom(ZOOMEDIN);
 
             console.log("one place left; should clean up routes");
-            // console.log(directions);
         } else if (props.places.length >= 2) {
             getDirectionsResult(props.places, setDirections);
 
             console.log(">=2 places left");
-            // console.log(directions);            
         } else {
             localStorage.removeItem('placesData');
             setDirections({ routes: [] });
@@ -59,9 +57,6 @@ function Map(props) {
             setZoom(DEFAULTZOOM);
             // directionsDisplay.setPanel(null);
             // directionsDisplay.setMap(null);
-
-            console.log("zero place left; should clean up routes");
-            // console.log(directions);
         }
     }, [props.places, mapRef]);
 

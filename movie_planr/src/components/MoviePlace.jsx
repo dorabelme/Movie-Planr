@@ -7,20 +7,13 @@ const MoviePlace = ({ moviePlace, removePlace, id, movies }) => {
         removePlace(id);
     };
 
-
     return (
-
         <Timeline className='Location-Wrapper' >
             <Timeline.Item>
                 <div>
                     <h3>{moviePlace}</h3>
                     {movies.map(movie => <p>{`Movie filmed: ${movie.title} (${movie.release_year})`}</p>)}
-
                 </div></Timeline.Item>
-
-            {/* <li className='Place'>
-                {moviePlace}
-            </li> */}
             <div className='Place-buttons'>
                 <button onClick={handleRemove}>
                     <i className='fas fa-trash' />

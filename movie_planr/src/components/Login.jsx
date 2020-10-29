@@ -6,13 +6,9 @@ import { Card, Input, Button, Form } from 'antd';
 
 const { Meta } = Card;
 
-
 const magic = new Magic(process.env.REACT_APP_MAGIC_KEY);
 
-const Login = ({history, isLoggedIn, setIsLoggedIn }) => {
-    
-    console.log(setIsLoggedIn);
-
+const Login = ({isLoggedIn, setIsLoggedIn }) => {
     // const [userMetadata, setUserMetadata] = useState(null);
     const [isLoggingIn, setIsLoggingIn] = useState(false);
 
@@ -56,16 +52,7 @@ const Login = ({history, isLoggedIn, setIsLoggedIn }) => {
 
         )
     } else {
-        console.log("already logged in")
-        // history.push('/app');
-
         return (<Redirect to="/app" />)
-        // return (
-        // <div>
-        //     <h1>Current user: ${userMetadata.email}</h1>
-        //     <button onclick={handleLogout}>Logout</button>
-        // </div>
-        // )
     }
     
 }
