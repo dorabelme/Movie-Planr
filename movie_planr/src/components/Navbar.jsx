@@ -1,14 +1,10 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { EnvironmentTwoTone, LogoutOutlined } from '@ant-design/icons';
-import { Magic } from 'magic-sdk';
 
-/* MAGIC API KEY */
-const magic = new Magic(process.env.REACT_APP_MAGIC_KEY);
 const { Header } = Layout;
 
-
-const Navbar = ({ history, setIsLoggedIn }) => {
+const Navbar = ({ history, setIsLoggedIn, magic }) => {
 
     /* Logout handler */
     const handleLogout = async () => {

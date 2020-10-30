@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Magic } from 'magic-sdk';
 import { Redirect } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import { Card, Input, Button, Form } from 'antd';
 
 const { Meta } = Card;
 
-/* MAGIC API KEY */
-const magic = new Magic(process.env.REACT_APP_MAGIC_KEY);
-
-const Login = ({isLoggedIn, setIsLoggedIn }) => {
+const Login = ({isLoggedIn, setIsLoggedIn, magic }) => {
     const [isLoggingIn, setIsLoggingIn] = useState(false);
 
     /* Login handler */
@@ -37,7 +33,7 @@ const Login = ({isLoggedIn, setIsLoggedIn }) => {
             updateStates();
         }
         
-    }, [isLoggingIn, setIsLoggedIn])
+    }, [isLoggingIn, setIsLoggedIn, magic.user])
 
     /* Render login component or Redirect to app */
     if (!isLoggedIn) {
