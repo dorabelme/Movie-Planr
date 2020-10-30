@@ -16,6 +16,7 @@
 
 .ant-timeline-item {
   margin: 0;
+  padding-top: 10px;
 
   h3 {
     font-size: 15px;
@@ -33,7 +34,6 @@
   flex-shrink: 0;
   padding-left: 0.7em;
   width: 7rem;
-  height: 2rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -51,13 +51,11 @@
   button {
     border: none;
     font-size: 1em;
-    margin: 0.4em;
     background: none;
 
     -webkit-appearance: none;
     cursor: pointer;
     color: #1890ff;
-    padding-top: 30px;
   }
 
   p {
