@@ -12,8 +12,8 @@ const Navbar = ({ history, setIsLoggedIn }) => {
 
     /* Logout handler */
     const handleLogout = async () => {
-        const result = await magic.user.logout();
-        setIsLoggedIn(result);
+        // await magic.user.logout();
+        setIsLoggedIn(false);
         history.push('/');
     };
 

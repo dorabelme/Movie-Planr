@@ -1,6 +1,6 @@
 /*global google*/
 
-export const getDirectionsResult = (places, callbackFn) => {
+const getDirectionsResult = (places, callbackFn) => {
     const directionsService = new google.maps.DirectionsService();
 
     const startingPlace = places[0];
@@ -31,7 +31,18 @@ export const getDirectionsResult = (places, callbackFn) => {
     );
 }
 
-export const retNum = (str) => {
+const retNum = (str) => {
     var num = parseFloat(str);
     return num;
 }
+
+const writeToFile = (path, data) => {
+    const fs = require('fs');
+    fs.writeFile(path, data, function (err) {
+        if (err) {
+            console.error(err);
+        }
+    });
+}
+
+module.exports = { getDirectionsResult, retNum, writeToFile };

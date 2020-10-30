@@ -2,6 +2,7 @@
   background: #f7f9fa;
   width: 115rem;
   margin: 6rem auto;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
   @media (max-width: $mq-tablet) {
@@ -21,7 +22,12 @@
 
 .MainContainer {
   background-color: #f7f9fa;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
   flex-direction: row;
   margin: 0px;
   width: 100%;
@@ -33,7 +39,12 @@
 
   @media (max-width: $mq-mobile) {
     max-width: 50rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
   }
 }
