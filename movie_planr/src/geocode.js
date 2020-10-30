@@ -1,6 +1,7 @@
 const { writeToFile } = require('./utils');
 const axios = require('axios');
 const { Client } = require("@googlemaps/google-maps-services-js");
+const moviesWithLatLng = require('./data/movieDataRaw.json');
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 const client = new Client({});
@@ -28,54 +29,33 @@ const getLatLong = (place) => {
         })
 }
 
-const getMoviesDump = async () => {
-    const response = await axios.get('https://data.sfgov.org/resource/yitu-d5am.json');
-    const movies = response.data.splice(0, 100);
+// const getMoviesDump = async () => {
+//     const response = await axios.get('https://data.sfgov.org/resource/yitu-d5am.json');
+//     const movies = response.data.splice(0, 100);
 
-    const moviesWithLatLng = (await Promise.all(movies.filter(movie => movie.locations !== undefined).map(async (movie) => {
-        try {
-            const o = await getLatLong(movie.locations);
-            const newMovie = {
-                ...movie,
-                'lat': o.lat,
-                'lng': o.lng,
-                'id': hashCode(movie.locations)
-            }
-            return newMovie;
-        } catch (e) {
-            console.log(e);
-            return movie;
-        }
+//     const moviesWithLatLng = (await Promise.all(movies.filter(movie => movie.locations !== undefined).map(async (movie) => {
+//         try {
+//             const o = await getLatLong(movie.locations);
+//             const newMovie = {
+//                 ...movie,
+//                 'lat': o.lat,
+//                 'lng': o.lng,
+//                 'id': hashCode(movie.locations)
+//             }
+//             return newMovie;
+//         } catch (e) {
+//             console.log(e);
+//             return movie;
+//         }
 
-    })))
+//     })))
 
-    const strMovies = JSON.stringify(moviesWithLatLng);
-    writeToFile('./src/data/movieDataRaw.json', strMovies);
-}
+//     const strMovies = JSON.stringify(moviesWithLatLng);
+//     writeToFile('./src/data/movieDataRaw.json', strMovies);
+// }
 
-const getMovies = async () => {
+const getMovies = () => {
     try {
-        const response = await axios.get('https://data.sfgov.org/resource/yitu-d5am.json');
-        const movies = response.data;
-
-        // const movies = response.data.slice(0, 200);
-
-        const moviesWithLatLng = (await Promise.all(movies.filter(movie => movie.locations !== undefined).map(async (movie) => {
-            try {
-                const o = await getLatLong(movie.locations);
-                const newMovie = {
-                    ...movie,
-                    'lat': o.lat,
-                    'lng': o.lng,
-                    'id': hashCode(movie.locations)
-                }
-                return newMovie;
-            } catch (e) {
-                return null;
-            }
-
-        }))).filter(o => o !== null);
-
         const obj = {};
 
         for (let elem of moviesWithLatLng) {
@@ -98,6 +78,8 @@ const getMovies = async () => {
             var dedupedMovies = new Set();
 
             const filteredMovies = movies.filter(movie => {
+                if (movie.title === undefined) return false;
+
                 const title = movie.title.trim();
                 if (dedupedMovies.has(title)) {
                     return false;
@@ -119,4 +101,3 @@ const getMovies = async () => {
 }
 
 getMovies();
-getMoviesDump();

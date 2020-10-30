@@ -15,6 +15,7 @@ const DEFAULTCENTER = {
 function Map(props) {
     const [directions, setDirections] = useState(null);
     const [zoom, setZoom] = useState(DEFAULTZOOM);
+    const [showMarkers, setShowMarkers] = useState(false);
 
     var mapRef = null;
 
@@ -49,6 +50,12 @@ function Map(props) {
         }
     }, [props.places, mapRef]);
 
+    useEffect(() => {        
+        const newState = props.places.length === 0;
+        console.log(newState);
+        setShowMarkers(newState);
+    }, [props.places])
+
     return (
         <div>
             <GoogleMap
@@ -59,7 +66,7 @@ function Map(props) {
 
                 zoom={zoom}
             >
-                {props.markers.map((data) => {
+                {showMarkers && props.markers.map((data) => {
                     return (<Marker
                         key={data.id}
                         position={
