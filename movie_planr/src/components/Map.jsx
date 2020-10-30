@@ -1,3 +1,5 @@
+/*global google*/
+
 import React, { useState, useEffect } from 'react';
 import { withGoogleMap, GoogleMap, DirectionsRenderer, Marker, InfoWindow } from 'react-google-maps';
 import { withScriptjs } from 'react-google-maps';
@@ -40,7 +42,8 @@ function Map(props) {
             mapRef.panTo({ 'lat': place.lat, 'lng': place.lng });
             setZoom(ZOOMEDIN);
         } else if (props.places.length >= 2) {
-            getDirectionsResult(props.places, setDirections);
+            const directionsService = new google.maps.DirectionsService();
+            getDirectionsResult(directionsService, props.places, setDirections);
         } else {
             localStorage.removeItem('placesData');
             setDirections({ routes: [] });

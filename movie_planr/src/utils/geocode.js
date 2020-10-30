@@ -1,15 +1,10 @@
-const { writeToFile } = require('./utils');
+const { writeToFile, hashCode } = require('./utils');
 const axios = require('axios');
 const { Client } = require("@googlemaps/google-maps-services-js");
 const moviesWithLatLng = require('../data/movieDataRaw.json');
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 const client = new Client({});
-
-const hashCode = (str) => {
-    return str.split('').reduce((prevHash, currVal) =>
-        (((prevHash << 5) - prevHash) + currVal.charCodeAt(0)) | 0, 0);
-}
 
 const getLatLong = (place) => {
     return client

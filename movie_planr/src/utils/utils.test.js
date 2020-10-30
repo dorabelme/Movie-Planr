@@ -16,6 +16,15 @@ test('zips two arrays into one', () => {
     expect(output).toStrictEqual(expected);
 })
 
+test('hashCode is deterministic', () => {
+    const o1 = utils.hashCode("abcd");
+    const o2 = utils.hashCode("abcd");
+    const expected = 2987074;
+
+    expect(o1).toStrictEqual(expected);
+    expect(o2).toStrictEqual(expected);
+})
+
 test('write hello to file', () => {
     const t = async () => {
         await utils.writeToFile('./word.json', 'hello');

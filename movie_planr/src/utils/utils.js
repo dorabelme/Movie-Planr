@@ -1,8 +1,6 @@
 /*global google*/
 
-const getDirectionsResult = (places, callbackFn) => {
-    const directionsService = new google.maps.DirectionsService();
-
+const getDirectionsResult = (directionsService, places, callbackFn) => {
     const startingPlace = places[0];
     const endingPlace = places[places.length - 1];
 
@@ -22,7 +20,6 @@ const getDirectionsResult = (places, callbackFn) => {
         },
         (result, status) => {
             if (status === google.maps.DirectionsStatus.OK) {
-                // console.log(result);
                 callbackFn(result);
             } else {
                 console.error(`error fetching directions ${result}`);
@@ -47,6 +44,11 @@ const writeToFile = (path, data) => {
     return o;
 }
 
+const hashCode = (str) => {
+    return str.split('').reduce((prevHash, currVal) =>
+        (((prevHash << 5) - prevHash) + currVal.charCodeAt(0)) | 0, 0);
+}
+
 const zip = (arr1, arr2) => arr1.map((k, i) => [k, arr2[i]]);
 
-module.exports = { getDirectionsResult, retNum, writeToFile, zip };
+module.exports = { getDirectionsResult, retNum, writeToFile, zip, hashCode };
