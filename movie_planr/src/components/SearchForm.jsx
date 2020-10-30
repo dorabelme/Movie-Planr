@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AutoComplete, Button } from 'antd';
 import data from '../data/movieData.json';
 
+/* Set initial state for component */
 const initialState = { place: '', searchInput: '' }
 
 const SearchForm = ({ places, addLocation }) => {
@@ -16,8 +17,6 @@ const SearchForm = ({ places, addLocation }) => {
     const dataJSON = [...locations].map(d => {
         return { 'value': d }
     });
-
-    console.log(dataJSON);
 
     return (
         <div>

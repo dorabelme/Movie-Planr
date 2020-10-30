@@ -1,8 +1,9 @@
-/*global google*/
 import React, { useState, useEffect } from 'react';
 import { withGoogleMap, GoogleMap, DirectionsRenderer, Marker, InfoWindow } from 'react-google-maps';
 // import data from '../data/movieData.json';
 import { withScriptjs } from 'react-google-maps';
+import { getDirectionsResult } from '../utils';
+// import { MAP } from 'react-google-maps/lib/constants';
 
 const DEFAULTZOOM = 13;
 const ZOOMEDIN = 15;
@@ -19,7 +20,13 @@ function Map(props) {
 
     const setRef = (ref) => {
         mapRef = ref;
-        // console.log(mapRef);
+    }
+
+    var rendereRef = null;
+
+    const setRendererRef = (ref) => {
+        rendereRef = ref;
+        console.log(rendereRef);
     }
 
     useEffect(() => {
@@ -28,36 +35,14 @@ function Map(props) {
             setDirections({ routes: [] });
             mapRef.panTo({ 'lat': place.lat, 'lng': place.lng });
             setZoom(ZOOMEDIN);
+
+            console.log("one place left; should clean up routes");
         } else if (props.places.length >= 2) {
-            const directionsService = new google.maps.DirectionsService();
+            getDirectionsResult(props.places, setDirections);
 
-            const startingPlace = props.places[0];
-            const endingPlace = props.places[props.places.length - 1];
-
-            const origin = { lat: startingPlace.lat, lng: startingPlace.lng };
-            const destination = { lat: endingPlace.lat, lng: endingPlace.lng };
-
-            const waypoints = props.places.slice(1, -1).map(p => {
-                return { 'location': new google.maps.LatLng(p.lat, p.lng) }
-            })
-
-            directionsService.route(
-                {
-                    origin: origin,
-                    destination: destination,
-                    travelMode: google.maps.TravelMode.DRIVING,
-                    waypoints
-                },
-                (result, status) => {
-                    if (status === google.maps.DirectionsStatus.OK) {
-                        console.log(result);
-                        setDirections(result);
-                    } else {
-                        console.error(`error fetching directions ${result}`);
-                    }
-                }
-            );
+            console.log(">=2 places left");
         } else {
+            localStorage.removeItem('placesData');
             setDirections({ routes: [] });
             mapRef.panTo(DEFAULTCENTER);
             setZoom(DEFAULTZOOM);
@@ -87,7 +72,7 @@ function Map(props) {
                         {data.isOpen && <InfoWindow
                             key={data.id + 1000}
                             onCloseClick={() => props.toggleMarker(data.id)}
-                            options={{ maxWidth: 300 }} style={{ backgroundColor: 'red' }} >
+                            options={{ maxWidth: 300 }} >
                             <div>
                                 <h1>{data.locations}</h1>
                             </div>
@@ -96,7 +81,7 @@ function Map(props) {
                     )
                 })}
 
-                {directions && <DirectionsRenderer directions={directions} />}
+                {directions && directions.routes.length > 0 && <DirectionsRenderer ref={setRendererRef} directions={directions} />}
             </GoogleMap>
         </div>
     );

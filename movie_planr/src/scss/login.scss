@@ -1,0 +1,61 @@
+.site-card-border-less-wrapper {
+  width: 115rem;
+  height: 70rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f7f9fa;
+  margin: 6rem auto;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  @media (max-width: $mq-tablet) {
+    margin: 2rem;
+    max-width: 80rem;
+    min-width: 70rem;
+    width: 90%;
+    margin: 2rem auto;
+  }
+  @media (max-width: $mq-mobile) {
+    max-width: 50rem;
+    min-width: 40rem;
+    width: 90%;
+    margin: 2 auto;
+  }
+
+  .ant-card {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    @media (max-width: $mq-mobile) {
+      margin: 3rem;
+    }
+  }
+
+  .ant-card-head-title {
+    color: #1890ff;
+    font-size: 3rem;
+    font-weight: 900;
+  }
+
+  .ant-card-meta-title {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+  input {
+    margin-bottom: 2rem;
+  }
+
+  button {
+    padding: 2rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+}
