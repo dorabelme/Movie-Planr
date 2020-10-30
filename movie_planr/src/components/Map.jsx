@@ -1,9 +1,9 @@
+/*global google*/
+
 import React, { useState, useEffect } from 'react';
 import { withGoogleMap, GoogleMap, DirectionsRenderer, Marker, InfoWindow } from 'react-google-maps';
-// import data from '../data/movieData.json';
 import { withScriptjs } from 'react-google-maps';
-import { getDirectionsResult } from '../utils';
-// import { MAP } from 'react-google-maps/lib/constants';
+import { getDirectionsResult } from '../utils/utils';
 
 const DEFAULTZOOM = 13;
 const ZOOMEDIN = 15;
@@ -13,34 +13,37 @@ const DEFAULTCENTER = {
 }
 
 function Map(props) {
-    const [directions, setDirections] = useState(null);
+    /* Conditionally render markers */
+    const getDataForMarkers = (places, markers) => {
+        if (places.length === 0) {
+            return markers
+        } else if (places.length === 1) {
+            return markers.filter(d => d.id === places[0].id)
+        } else {
+            return []
+        }
+    }
+    /* Map states */
     const [zoom, setZoom] = useState(DEFAULTZOOM);
+    const [directions, setDirections] = useState(null);
+    const [dataForMarkers, setDataForMarkers] = useState(getDataForMarkers(props.places, props.markers));
 
+    /* Get reference to map */
     var mapRef = null;
-
     const setRef = (ref) => {
         mapRef = ref;
     }
 
-    var rendereRef = null;
-
-    const setRendererRef = (ref) => {
-        rendereRef = ref;
-        console.log(rendereRef);
-    }
-
+    /* Manual controls for map (zooming in, removing routes) */
     useEffect(() => {
         if (props.places.length === 1) {
             const place = props.places[0];
             setDirections({ routes: [] });
             mapRef.panTo({ 'lat': place.lat, 'lng': place.lng });
             setZoom(ZOOMEDIN);
-
-            console.log("one place left; should clean up routes");
         } else if (props.places.length >= 2) {
-            getDirectionsResult(props.places, setDirections);
-
-            console.log(">=2 places left");
+            const directionsService = new google.maps.DirectionsService();
+            getDirectionsResult(directionsService, props.places, setDirections);
         } else {
             localStorage.removeItem('placesData');
             setDirections({ routes: [] });
@@ -49,17 +52,29 @@ function Map(props) {
         }
     }, [props.places, mapRef]);
 
+
+    /* Rendering markers */
+    useEffect(() => {
+        const newData = getDataForMarkers(props.places, props.markers);
+        setDataForMarkers(newData);
+    }, [props.places, props.markers])
+
+    useEffect(() => {
+        if (directions != null && directions.routes.length >= 1) {
+            const legs = directions.routes[0].legs;
+            props.updateLegs(legs);          
+        }        
+    }, [directions, props])
+
     return (
         <div>
             <GoogleMap
                 ref={setRef}
-
                 defaultCenter={DEFAULTCENTER}
                 defaultZoom={DEFAULTZOOM}
-
                 zoom={zoom}
             >
-                {props.markers.map((data) => {
+                {dataForMarkers.map((data) => {
                     return (<Marker
                         key={data.id}
                         position={
@@ -80,12 +95,10 @@ function Map(props) {
                     </Marker>
                     )
                 })}
-
-                {directions && directions.routes.length > 0 && <DirectionsRenderer ref={setRendererRef} directions={directions} />}
+                {directions && directions.routes.length > 0 && <DirectionsRenderer directions={directions} />}
             </GoogleMap>
         </div>
     );
 }
-
 
 export default withScriptjs(withGoogleMap(Map));

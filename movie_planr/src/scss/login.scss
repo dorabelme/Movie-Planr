@@ -1,11 +1,18 @@
 .site-card-border-less-wrapper {
   width: 115rem;
   height: 70rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   background: #f7f9fa;
   margin: 6rem auto;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
   @media (max-width: $mq-tablet) {
@@ -24,9 +31,18 @@
 
   .ant-card {
     text-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
 
     @media (max-width: $mq-mobile) {
@@ -44,18 +60,19 @@
     font-size: 1.8rem;
     margin-bottom: 2rem;
   }
-  input {
-    margin-bottom: 2rem;
+
+  .ant-form-item-explain {
+    margin-bottom: 3rem;
   }
 
   button {
-    padding: 2rem;
+    width: 100px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 3.3rem;
+    padding-top: 1rem;
     font-size: 1.6rem;
     font-weight: 700;
     margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
   }
 }

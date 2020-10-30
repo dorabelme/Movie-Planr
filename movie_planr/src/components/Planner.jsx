@@ -1,14 +1,18 @@
 import React from 'react';
 import SearchForm from './SearchForm';
 import MoviePlace from './MoviePlace';
+import { zip } from '../utils/utils';
 
-const Planner = ({ places, addtoPlaces, removePlace, setPlannerRef }) => {
-    const moviePlaces = places.map(place => <MoviePlace
+const Planner = ({ places, legs, addtoPlaces, removePlace, setPlannerRef }) => {
+
+    const placesWithLegs = zip(places, [null, ...legs]);
+    const moviePlaces = placesWithLegs.map(([place, leg]) => <MoviePlace
         key={place.id}
         id={place.id}
         moviePlace={place.locations}
         movies={place.movies}
         removePlace={removePlace}
+        leg={leg}
     />);
 
     return (
