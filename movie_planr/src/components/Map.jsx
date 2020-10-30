@@ -13,9 +13,19 @@ const DEFAULTCENTER = {
 }
 
 function Map(props) {
+    const getDataForMarkers = (places, markers) => {
+        if (places.length === 0) {
+            return markers
+        } else if (places.length === 1) {
+            return markers.filter(d => d.id === places[0].id)
+        } else {
+            return []
+        }
+    }
+
     const [directions, setDirections] = useState(null);
     const [zoom, setZoom] = useState(DEFAULTZOOM);
-    const [showMarkers, setShowMarkers] = useState(false);
+    const [dataForMarkers, setDataForMarkers] = useState(getDataForMarkers(props.places, props.markers));
 
     var mapRef = null;
 
@@ -50,11 +60,10 @@ function Map(props) {
         }
     }, [props.places, mapRef]);
 
-    useEffect(() => {        
-        const newState = props.places.length === 0;
-        console.log(newState);
-        setShowMarkers(newState);
-    }, [props.places])
+    useEffect(() => {
+        const newData = getDataForMarkers(props.places, props.markers);
+        setDataForMarkers(newData);
+    }, [props.places, props.markers])
 
     return (
         <div>
@@ -66,7 +75,8 @@ function Map(props) {
 
                 zoom={zoom}
             >
-                {showMarkers && props.markers.map((data) => {
+ 
+                {dataForMarkers.map((data) => {
                     return (<Marker
                         key={data.id}
                         position={
