@@ -3,22 +3,20 @@ import { Layout } from 'antd';
 import { EnvironmentTwoTone, LogoutOutlined } from '@ant-design/icons';
 import { Magic } from 'magic-sdk';
 
+/* MAGIC API KEY */
 const magic = new Magic(process.env.REACT_APP_MAGIC_KEY);
-
 const { Header } = Layout;
 
 
 const Navbar = ({ history, setIsLoggedIn }) => {
 
+    /* Logout handler */
     const handleLogout = async () => {
-        console.log("logout");
-
         const result = await magic.user.logout();
-        console.log(result);
-        setIsLoggedIn(false);
+        setIsLoggedIn(result);
         history.push('/');
     };
-    
+
     return (
         <Layout>
             <Header className='Navbar'>

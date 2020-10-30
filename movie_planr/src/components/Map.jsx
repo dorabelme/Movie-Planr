@@ -16,17 +16,10 @@ function Map(props) {
     const [directions, setDirections] = useState(null);
     const [zoom, setZoom] = useState(DEFAULTZOOM);
 
-    // const directionsDisplay = new google.maps.DirectionsRenderer();
-
     var mapRef = null;
 
     const setRef = (ref) => {
         mapRef = ref;
-
-        // if (mapRef != null) {
-        //     console.log(mapRef.context[MAP]);
-        //     directionsDisplay.setMap(mapRef.context[MAP]);
-        // }        
     }
 
     var rendereRef = null;
@@ -40,8 +33,6 @@ function Map(props) {
         if (props.places.length === 1) {
             const place = props.places[0];
             setDirections({ routes: [] });
-            // directionsDisplay.setPanel(null);
-            // directionsDisplay.setMap(null);
             mapRef.panTo({ 'lat': place.lat, 'lng': place.lng });
             setZoom(ZOOMEDIN);
 
@@ -55,16 +46,8 @@ function Map(props) {
             setDirections({ routes: [] });
             mapRef.panTo(DEFAULTCENTER);
             setZoom(DEFAULTZOOM);
-            // directionsDisplay.setPanel(null);
-            // directionsDisplay.setMap(null);
         }
     }, [props.places, mapRef]);
-
-    // useEffect(() => {
-    //     if (directions != null) {
-    //         directionsDisplay.setDirections(directions);
-    //     }
-    // }, [directions])
 
     return (
         <div>

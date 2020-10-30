@@ -2,7 +2,6 @@ import React from 'react';
 import { Timeline } from 'antd';
 
 const MoviePlace = ({ moviePlace, removePlace, id, movies }) => {
-
     const handleRemove = () => {
         removePlace(id);
     };

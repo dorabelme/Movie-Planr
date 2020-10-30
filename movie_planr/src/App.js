@@ -4,7 +4,7 @@ import AppContainer from './components/AppContainer';
 import { Route, Switch } from 'react-router-dom';
 
 
-const App = (props) => {
+const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     return (

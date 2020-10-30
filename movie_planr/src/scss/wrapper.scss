@@ -1,7 +1,7 @@
 .AppContainer {
   background: #f7f9fa;
   width: 115rem;
-  margin: 4rem auto;
+  margin: 6rem auto;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
   @media (max-width: $mq-tablet) {
@@ -28,7 +28,7 @@
 
   @media (max-width: $mq-tablet) {
     max-width: 80rem;
-    width: 90%;
+    width: 100%;
   }
 
   @media (max-width: $mq-mobile) {

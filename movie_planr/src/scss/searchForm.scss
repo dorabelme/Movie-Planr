@@ -8,11 +8,9 @@ div.ant-select
 }
 
 .searchButton {
-  @media (max-width: $mq-tablet) {
-    margin-top: 1rem;
-  }
+  margin-left: 0.5rem;
 
-  @media (max-width: $mq-mobile) {
-    margin-left: 1rem;
+  @media (max-width: $mq-tablet) {
+    margin-top: 0.5rem;
   }
 }
