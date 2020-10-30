@@ -32,11 +32,6 @@ function Map(props) {
         mapRef = ref;
     }
 
-    var rendererRef = null;
-    const setRendererRef = (ref) => {
-        rendererRef = ref;
-    }
-
     /* Manual controls for map (zooming in, removing routes) */
     useEffect(() => {
         if (props.places.length === 1) {
@@ -66,7 +61,7 @@ function Map(props) {
             const legs = directions.routes[0].legs;
             props.updateLegs(legs);          
         }        
-    }, [directions])
+    }, [directions, props])
 
     return (
         <div>
@@ -97,7 +92,7 @@ function Map(props) {
                     </Marker>
                     )
                 })}
-                {directions && directions.routes.length > 0 && <DirectionsRenderer ref={setRendererRef} directions={directions} />}
+                {directions && directions.routes.length > 0 && <DirectionsRenderer directions={directions} />}
             </GoogleMap>
         </div>
     );
