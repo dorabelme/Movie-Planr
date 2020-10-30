@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withGoogleMap, GoogleMap, DirectionsRenderer, Marker, InfoWindow } from 'react-google-maps';
 import { withScriptjs } from 'react-google-maps';
-import { getDirectionsResult } from '../utils';
+import { getDirectionsResult } from '../utils/utils';
 
 const DEFAULTZOOM = 13;
 const ZOOMEDIN = 15;

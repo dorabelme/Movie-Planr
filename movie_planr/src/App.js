@@ -1,11 +1,22 @@
 import React, { useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Login from './components/Login';
 import AppContainer from './components/AppContainer';
 
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    // authorization
+    const protectRoute = Component => props => {
+        if (isLoggedIn) {
+            return <Component {...props} />;
+        } else {
+            return <Redirect to="/" />;
+        }
+    };
+
+    const ProtectedAppContainer = protectRoute(AppContainer);
 
     return (
         <Switch>
@@ -16,7 +27,7 @@ const App = () => {
             />
             <Route
                 exact path='/app'
-                render={(props) => <AppContainer {...props} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />}
+                render={(props) => <ProtectedAppContainer {...props} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />}
             />
         </Switch>
     )

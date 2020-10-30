@@ -3,7 +3,7 @@ import Map from './Map';
 import Navbar from './Navbar';
 import Planner from './Planner';
 import data from '../data/movieData.json';
-import { retNum } from '../utils';
+import { retNum } from '../utils/utils';
 import '../scss/app.scss';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
