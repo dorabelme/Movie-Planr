@@ -1,4 +1,4 @@
-.Location-Wrapper {
+.LocationWrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -9,37 +9,59 @@
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: flex-start;
 }
 
 .ant-timeline-item {
   margin: 0;
-}
 
-.ant-timeline-item h3 {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
 
-.ant-timeline-item p {
-  font-size: 12px;
+  p {
+    font-size: 12px;
+  }
 }
 
 .Place-buttons {
   -ms-flex-negative: 0;
   flex-shrink: 0;
   padding-left: 0.7em;
+  width: 7rem;
+  height: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 
   button {
     border: none;
     font-size: 1em;
     margin: 0.4em;
     background: none;
+
     -webkit-appearance: none;
     cursor: pointer;
     color: #1890ff;
+    padding-top: 30px;
+  }
+
+  p {
+    font-size: 1.2rem;
+    font-weight: 600;
   }
 }

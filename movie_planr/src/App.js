@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import Login from './components/Login';
 import AppContainer from './components/AppContainer';
-import { Route, Switch } from 'react-router-dom';
 
 
 const App = () => {
@@ -9,7 +9,6 @@ const App = () => {
 
     return (
         <Switch>
-
             <Route
                 exact
                 path='/'
@@ -19,7 +18,6 @@ const App = () => {
                 exact path='/app'
                 render={(props) => <AppContainer {...props} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />}
             />
-
         </Switch>
     )
 }

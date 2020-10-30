@@ -10,7 +10,6 @@ const { Meta } = Card;
 const magic = new Magic(process.env.REACT_APP_MAGIC_KEY);
 
 const Login = ({isLoggedIn, setIsLoggedIn }) => {
-    // const [userMetadata, setUserMetadata] = useState(null);
     const [isLoggingIn, setIsLoggingIn] = useState(false);
 
     /* Login handler */
@@ -20,7 +19,6 @@ const Login = ({isLoggedIn, setIsLoggedIn }) => {
             try {
                 await magic.auth.loginWithMagicLink({ email });
                 setIsLoggingIn(true);
-                // setIsLoggedIn(true);
             } catch (err) {
                 console.log(err);
             }
@@ -31,10 +29,7 @@ const Login = ({isLoggedIn, setIsLoggedIn }) => {
     useEffect(() => {
         async function updateStates() {
             const result = await magic.user.isLoggedIn();
-            // const result = true;
             setIsLoggedIn(result);
-            // const userMetadata = await magic.user.getMetadata();
-            // setUserMetadata(userMetadata);
             setIsLoggingIn(false);
         }
 
@@ -51,7 +46,16 @@ const Login = ({isLoggedIn, setIsLoggedIn }) => {
                 <Card title='Movie Route Planr' bordered={false} style={{ width: 400, height: 400 }}>
                     <Meta title=' 👋 Please sign up or login! 👋'></Meta>
                     <Form onFinish={handleLogin}>
-                        <Form.Item type='email' name='email' required='required' placeholder='Enter your email' >
+                        <Form.Item
+                            type='email'
+                            name='email'
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your email!',
+                                },
+                            ]}
+                            placeholder='Enter your email' >
                             <Input />
                         </Form.Item>
                         <Form.Item>

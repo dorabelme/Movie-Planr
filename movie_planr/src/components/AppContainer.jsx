@@ -6,17 +6,20 @@ import data from '../data/movieData.json';
 import { retNum } from '../utils';
 import '../scss/app.scss';
 
-/* GOOGLE API KEY*/
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 const googleMapURL = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
 
+const DEFAULT_HEIGHT = 750;
+const DEFAULT_WIDTH = DEFAULT_HEIGHT;
 
 const AppContainer = (props) => {
+
   /* States for component */
   const [markers, setMarkers] = useState([]);
+  const [legs, setLegs] = useState([]);
   const [places, setPlaces] = useState([]);
-  const [mapHeight, setMapHeight] = useState(750);
-  const [mapWidth, setMapWidth] = useState(750);
+  const [mapHeight, setMapHeight] = useState(DEFAULT_HEIGHT);
+  const [mapWidth, setMapWidth] = useState(DEFAULT_WIDTH);
 
   /* Get reference for map and planner container */
   var containerRef = null;
@@ -36,8 +39,6 @@ const AppContainer = (props) => {
     }
     const output = data.map(d => { return { ...d, 'isOpen': false } });
     setMarkers(output);
-    setMapHeight(750);
-    setMapWidth(750);
   }, []);
 
    /* Update localStorage on state changes in places*/
@@ -67,7 +68,12 @@ const AppContainer = (props) => {
     setPlaces(places.filter(place => place.id !== id));
   };
 
-  /* ???*/
+  /* Update legs state for planner */
+  const updateLegs = (legs) => {
+    setLegs(legs);
+  }
+
+  /* Set map height and width - media queries*/
   useEffect(() => {
     const tabletSelector = window.matchMedia('(max-width: 800px)');
     const iphoneSelector = window.matchMedia('(max-width: 500px)');
@@ -91,8 +97,6 @@ const AppContainer = (props) => {
         height = width;
       }
 
-      // console.log(height, width);
-
       setMapHeight(height);
       setMapWidth(width);
     }
@@ -104,13 +108,15 @@ const AppContainer = (props) => {
       >
         <Navbar {...props} />
       <div className='MainContainer'>
-          <Planner
+        <Planner
+            legs={legs}
             setPlannerRef={setPlannerRef}
             addtoPlaces={addtoPlaces}
             removePlace={removePlace}
             places={places} />
           <div>
-            <Map
+          <Map
+              updateLegs={updateLegs}
               markers={markers}
               toggleMarker={toggleMarker}
               places={places}

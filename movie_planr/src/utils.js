@@ -45,4 +45,6 @@ const writeToFile = (path, data) => {
     });
 }
 
-module.exports = { getDirectionsResult, retNum, writeToFile };
+const zip = (arr1, arr2) => arr1.map((k, i) => [k, arr2[i]]);
+
+module.exports = { getDirectionsResult, retNum, writeToFile, zip };
