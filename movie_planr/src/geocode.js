@@ -118,5 +118,5 @@ const getMovies = async () => {
     }
 }
 
-// getMovies();
+getMovies();
 getMoviesDump();

@@ -16,7 +16,7 @@
 
 ## Demo
 
-[![Route Planner](http://veerasundar.com/route-planner/route-planner-screenshot-new.PNG)](http://veerasundar.com/route-planner)
+![App-example](movierouteplanr.gif)
 
 ## Tech Stack
 
